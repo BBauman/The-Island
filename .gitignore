@@ -1,6 +1,12 @@
 # Idea files
 .idea/
 
+# Gradle files
+.gradle/
+
+# Build files
+build/
+
 # Compiled class file
 *.class
 
