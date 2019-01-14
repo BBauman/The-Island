@@ -1,0 +1,33 @@
+[
+  // 1 - Escape location (and starting location)
+  { name: "Landing Site" },
+
+  // 8 - Temples
+  { name: "Temple of Air", element: "air" },
+  { name: "Shrine of Air", element: "air" },
+  { name: "Temple of Earth", element: "earth" },
+  { name: "Shrine of Earth", element: "earth" },
+  { name: "Temple of Fire", element: "fire" },
+  { name: "Shrine of Fire", element: "fire" },
+  { name: "Temple of Water", element: "water" },
+  { name: "Temple of Water", element: "water" },
+
+  // 5 - Starting locations
+  {},
+  {},
+  {},
+  {},
+  {},
+
+  // 10 - Unimportant locations
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {}
+]
