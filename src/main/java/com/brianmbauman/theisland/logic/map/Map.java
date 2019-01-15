@@ -1,19 +1,17 @@
 package com.brianmbauman.theisland.logic.map;
 
 import com.brianmbauman.theisland.logic.map.Location;
+import com.google.common.collect.ImmutableBiMap;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class Map {
 
-
-
-    private java.util.Map<Coordinates, Location> grid;
+    private ImmutableBiMap<Coordinates, Location> map;
 
     public Coordinates coordinates(Location location) {
-        // TODO
-        return null;
+        return map.inverse().get(location);
     }
 
     public Set<Location> neighbors(Location location, boolean includeDiagonals) {
@@ -23,17 +21,17 @@ public class Map {
         Set<Location> neighbors = new HashSet<>();
 
         // Clockwise from top
-        neighbors.add(grid.get(new Coordinates(x, y-1)));
-        neighbors.add(grid.get(new Coordinates(x+1, y)));
-        neighbors.add(grid.get(new Coordinates(x, y+1)));
-        neighbors.add(grid.get(new Coordinates(x-1, y)));
+        neighbors.add(map.get(new Coordinates(x, y-1)));
+        neighbors.add(map.get(new Coordinates(x+1, y)));
+        neighbors.add(map.get(new Coordinates(x, y+1)));
+        neighbors.add(map.get(new Coordinates(x-1, y)));
 
         if (includeDiagonals) {
             // Clockwise from upper left
-            neighbors.add(grid.get(new Coordinates(x-1, y-1)));
-            neighbors.add(grid.get(new Coordinates(x+1, y-1)));
-            neighbors.add(grid.get(new Coordinates(x+1, y+1)));
-            neighbors.add(grid.get(new Coordinates(x-1, y+1)));
+            neighbors.add(map.get(new Coordinates(x-1, y-1)));
+            neighbors.add(map.get(new Coordinates(x+1, y-1)));
+            neighbors.add(map.get(new Coordinates(x+1, y+1)));
+            neighbors.add(map.get(new Coordinates(x-1, y+1)));
         }
 
         return neighbors;

@@ -1,11 +1,15 @@
 # Idea files
 .idea/
+*.iml
+*.ipr
+*.iws
 
 # Gradle files
 .gradle/
 
 # Build files
 build/
+out/
 
 # Compiled class file
 *.class
