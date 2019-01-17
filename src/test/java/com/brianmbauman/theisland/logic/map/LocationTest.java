@@ -23,7 +23,7 @@ class LocationTest {
     @Test
     void load() {
         List list = Location.load();
-        System.out.print(Arrays.toString(list.toArray()));
+        System.out.println(Arrays.toString(list.toArray()));
         Assertions.assertEquals(24, list.size(), "Incorrect number of locations loaded from configuration");
     }
 }

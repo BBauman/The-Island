@@ -18,7 +18,16 @@ public class Location {
     public enum FloodState {
         DRY,
         FLOODED,
-        SUNK
+        SUNK;
+
+        public static FloodState fromName(String name) {
+            for (FloodState floodState : FloodState.values()) {
+                if (floodState.name().equalsIgnoreCase(name)) {
+                    return floodState;
+                }
+            }
+            throw new IllegalArgumentException("No FloodState exists for value " + name);
+        }
     }
 
     public static List<Location> load() {
@@ -36,8 +45,6 @@ public class Location {
         } catch (IOException e) {
             throw new BadConfigurationException(e);
         }
-
-
     }
 
     private String name;
@@ -47,10 +54,16 @@ public class Location {
     @JsonCreator
     private Location (
             @JsonProperty("name") String name,
-            @JsonProperty("element") String element
+            @JsonProperty("element") String element,
+            @JsonProperty("floodState") String floodState
     ) {
         this.name       = name != null ? name : "Unknown";
         this.element    = element != null ? Element.fromName(element) : Element.NONE;
+        this.floodState = floodState != null ? FloodState.fromName(floodState) : FloodState.DRY;
+    }
+
+    public FloodState getFloodState() {
+        return floodState;
     }
 
     @Override
