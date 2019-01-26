@@ -1,21 +1,15 @@
 package com.brianmbauman.theisland.logic.map;
 
 import com.brianmbauman.theisland.logic.adventurer.MovementStrategy;
-import com.brianmbauman.theisland.logic.exception.BadConfigurationException;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.MappingIterator;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableSet;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 
 public class Map {
 
@@ -90,10 +84,10 @@ public class Map {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        map.forEach((coordinate, location) -> {
-            builder.append(coordinate + " : " + location);
-            builder.append(System.getProperty("line.separator"));
-        });
+        map.forEach((coordinate, location) ->
+                builder.append(coordinate)
+                    .append(" : ")
+                    .append(System.getProperty("line.separator")));
 
         return builder.toString();
     }

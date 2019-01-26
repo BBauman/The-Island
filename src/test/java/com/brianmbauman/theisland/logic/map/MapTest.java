@@ -22,9 +22,7 @@ class MapTest {
     @Test
     void coordinates() {
         Assertions.assertAll(() ->
-                {
-                    map.locations().forEach(location -> Assertions.assertSame(map.coordinates(location).getClass(), Coordinate.class));
-                }
+                    map.locations().forEach(location -> Assertions.assertSame(map.coordinates(location).getClass(), Coordinate.class))
         );
     }
 
@@ -34,13 +32,11 @@ class MapTest {
         MovementStrategy diagonalMovement = new MovementStrategy(true, false, false);
 
         Assertions.assertAll(() ->
-                {
-                    map.locations().forEach(location ->
-                    {
-                        Assertions.assertTrue(map.neighbors(location, MovementStrategy.DEFAULT).size() >= 2);
-                        Assertions.assertTrue(map.neighbors(location, diagonalMovement).size() >= 3 );
-                    });
-                }
+            map.locations().forEach(location ->
+            {
+                Assertions.assertTrue(map.neighbors(location, MovementStrategy.DEFAULT).size() >= 2);
+                Assertions.assertTrue(map.neighbors(location, diagonalMovement).size() >= 3 );
+            })
         );
     }
 }
