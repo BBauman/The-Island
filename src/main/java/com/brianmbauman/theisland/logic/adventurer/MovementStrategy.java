@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MovementStrategy {
 
+    public static final MovementStrategy DEFAULT = new MovementStrategy(false, false, false);
+
     private final boolean usesDiagonals;
     private final boolean usesFlight;
     private final boolean usesSunk;

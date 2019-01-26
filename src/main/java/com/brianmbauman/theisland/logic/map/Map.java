@@ -7,43 +7,31 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableBiMap;
+import com.google.common.collect.ImmutableSet;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Map {
 
     private ImmutableBiMap<Coordinate, Location> map;
 
-    private static LinkedHashSet<Coordinate> loadCoordinates(String coordinatesFile) {
-        try (InputStream locationsConfig = Location.class.getResourceAsStream(coordinatesFile)){
-            ObjectMapper mapper = new ObjectMapper();
-            TypeReference<Set<Coordinate>> responseType = new TypeReference<>() {};
-
-            // TODO: Single global, preconfigured Mapper?
-            mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
-            mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-
-            MappingIterator<Coordinate> mappingIterator = mapper.readerFor(Coordinate.class).readValues(locationsConfig);
-
-            return new LinkedHashSet<>(mappingIterator.readAll());
-        } catch (IOException e) {
-            throw new BadConfigurationException(e);
-        }
-    }
-
     public Map(String mapName, List<Location> locations) {
-        this(loadCoordinates(mapName), locations);
+        this(MapLayout.LAYOUTS.get(mapName), locations);
     }
 
-    public Map(Set<Coordinate> coordinates, List<Location> locations) {
+    public Map(MapLayout mapLayout, List<Location> locations) {
 
         Collections.shuffle(locations);
         ImmutableBiMap.Builder builder = ImmutableBiMap.builder();
 
         Iterator locationIterator = locations.iterator();
-        for (Coordinate coordinate : coordinates) {
+        for (Coordinate coordinate : mapLayout.getCoordinates()) {
             builder.put(coordinate, locationIterator.next());
         }
 
@@ -53,6 +41,15 @@ public class Map {
 
     public Coordinate coordinates(Location location) {
         return map.inverse().get(location);
+    }
+
+    public ImmutableSet<Location> findPath(Location start, Location end, MovementStrategy movementStrategy) {
+        // TODO
+        return null;
+    }
+
+    public ImmutableSet<Location> locations() {
+        return map.values();
     }
 
     public Set<Location> neighbors(Location location, MovementStrategy movementStrategy) {
@@ -74,6 +71,9 @@ public class Map {
             neighbors.add(map.get(new Coordinate(x+1, y+1)));
             neighbors.add(map.get(new Coordinate(x-1, y+1)));
         }
+
+        // Remove nulls
+        neighbors.remove(null);
 
         // Remove if sunken
         if (!movementStrategy.usesSunk()) {
